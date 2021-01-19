@@ -21,24 +21,21 @@ func main() {
 	port := ":" + os.Getenv("PORT")
 	r.Run(port)
 
-  
 }
 
 type sendMailRequest struct {
-	DestEmail string `json:"dest_email"`
-	Details orderDetails `json:"details"`
-
+	DestEmail string       `json:"dest_email"`
+	Details   orderDetails `json:"details"`
 }
 
 type orderDetails struct {
-	ID string `json:"id"`
-	Amount string `json:"amount"`
-	Name string `json:"name"`
-	PhoneNumber string `json:"phone_number"`
-	Adress string `json:"address"`
-	ItemCount string `json:"item_count"`
-	Items []string `json:"items"`
-
+	ID          string   `json:"id"`
+	Amount      string   `json:"amount"`
+	Name        string   `json:"name"`
+	PhoneNumber string   `json:"phone_number"`
+	Adress      string   `json:"address"`
+	ItemCount   string   `json:"item_count"`
+	Items       []string `json:"items"`
 }
 
 func handleHealth(ctx *gin.Context) {
@@ -61,7 +58,6 @@ func handleSendEmail(ctx *gin.Context) {
 		return
 	}
 
-	
 	ctx.JSON(http.StatusOK, res)
 
 }
@@ -70,28 +66,28 @@ func sendMail(req sendMailRequest) (string, error) {
 	// Sender data.
 	from := os.Getenv("EMAIL_FROM")
 	password := os.Getenv("PASSWORD")
-  
+
 	// Receiver email address.
 	to := []string{
-	  req.DestEmail,
+		req.DestEmail,
 	}
-  
+
 	// smtp server configuration.
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
-  
+
 	req.Details.ID, _ = newUUID()
 
 	// Message.
 	message := []byte(req.Details.Amount)
-	
+
 	// Authentication.
 	auth := smtp.PlainAuth("", from, password, smtpHost)
-	
+
 	// Sending email.
 	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
 	if err != nil {
-	  return "", err
+		return "", err
 	}
 
 	return req.Details.ID, err
