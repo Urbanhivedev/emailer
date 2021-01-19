@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/smtp"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -66,8 +67,8 @@ func handleSendEmail(ctx *gin.Context) {
 
 func sendMail(req sendMailRequest) (string, error) {
 	// Sender data.
-	from := "urbanhivedev@gmail.com"
-	password := "urbanHIVE2020!"
+	from := os.Getenv("EMAIL_FROM")
+	password := os.Getenv("PASSWORD")
   
 	// Receiver email address.
 	to := []string{
