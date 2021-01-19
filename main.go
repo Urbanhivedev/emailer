@@ -15,10 +15,11 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/health", handleHealth)
+	r.GET("/", handleHealth)
 	r.POST("/sendmail", handleSendEmail)
 
-	r.Run(":7000")
+	port := ":" + os.Getenv("PORT")
+	r.Run(port)
 
   
 }
