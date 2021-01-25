@@ -1,0 +1,39 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Email Sender Service",
+        "description": "UrbanHIve email API service",
+        "version": "0.1.1"
+    },
+    "servers": [
+        {
+            "url": "htts://uh-emailer.herokuapp.com",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/send-mail": {
+            "post": {
+                "summary": "Sends mail to the given email address",
+                "description": "returns a randomly generated ID of the action just performed",
+                "responses": {
+                    "200": {
+                        "description": "A JSON object that includes the ID alone",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ID": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
